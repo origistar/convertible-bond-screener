@@ -381,6 +381,7 @@ def build_html(stats, cand, redeem_watch, empty):
     for _, r in redeem_watch.head(10).iterrows():
         red_rows += (f"<tr><td>{r['code']}</td><td>{r['name']}</td>"
                      f"<td class='num'>{r['price']:.2f}</td>"
+                     f"<td class='num'>{r['premium']:.1f}%</td>"
                      f"<td class='num'>{r['double_low']:.1f}</td>"
                      f"<td>{r['RATING']}</td></tr>")
 
@@ -428,6 +429,7 @@ td.num{{text-align:right;font-variant-numeric:tabular-nums}}
 .tag-dim{{color:var(--dim)}}
 .spark{{margin-top:8px}}
 .spark .lab{{font-size:11px;color:var(--dim);margin:8px 0 2px}}
+.note{{font-size:12px;color:var(--dim);margin:8px 0 12px;line-height:1.5}}
 footer{{color:var(--dim);font-size:11px;text-align:center;margin-top:20px;line-height:1.6}}
 </style></head><body>
 <header><h1>可转债双低筛选</h1><span class="date">{TODAY}</span></header>
@@ -443,7 +445,8 @@ footer{{color:var(--dim);font-size:11px;text-align:center;margin-top:20px;line-h
 <table><thead><tr><th>代码</th><th>名称</th><th>价格</th><th>双低值</th><th>溢价率</th><th>评级</th><th>规模(亿)</th><th>债底</th></tr></thead>
 <tbody>{cand_rows}</tbody></table></div>
 <div class="section"><h2>强赎关注区（价≥130）Top 10</h2>
-<table><thead><tr><th>代码</th><th>名称</th><th>价格</th><th>双低值</th><th>评级</th></tr></thead>
+<p class="note">⚠️ 这里是「高价高溢价的妖债/强赎博弈区」：价格远超 130、股性极强，正股回调时跌幅可能很大；<strong>非买入清单</strong>，仅作风险警示与观察。</p>
+<table><thead><tr><th>代码</th><th>名称</th><th>价格</th><th>溢价率</th><th>双低值</th><th>评级</th></tr></thead>
 <tbody>{red_rows}</tbody></table></div>
 <footer>数据来源：东方财富 · 仅为量化筛选，不构成投资建议<br>
 策略：双低+安全债底+评级/规模过滤+估值水位总开关 · 自用研究</footer>
