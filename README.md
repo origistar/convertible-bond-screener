@@ -2,6 +2,8 @@
 
 把双低策略筛选器做成**每日自动跑 + 网页展示 + 微信推送**的成品。照搬 QQQ 信号页那套 GitHub Pages + Actions 工作流。
 
+🌐 线上页面：**https://origistar.github.io/convertible-bond-screener/**（每日北京 22:00 自动更新）
+
 ## 功能
 - 每日收盘后（北京时间 22:00）自动抓取东方财富可转债行情 + 基本信息
 - 计算并输出：
