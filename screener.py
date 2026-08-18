@@ -362,6 +362,12 @@ def build_html(stats, cand, redeem_watch, empty):
 
     badge = ("risk" if empty else "ok")
     badge_text = ("⚠️ 空仓观望" if empty else "✅ 可关注")
+    action_cls = ("risk" if empty else "ok")
+    action_text = (
+        "当前双低&lt;130 的合格标的不足 15 只，说明市场整体偏贵。<strong>操作建议：空仓观望，不新建仓</strong>，等该数量回到 15 只以上再出手。"
+        if empty else
+        "市场处于可操作区间，可结合仓位从「安全双低候选」中挑选标的，但仍需单只独立判断风险。"
+    )
 
     cand_rows = ""
     show = cand.head(20)
@@ -374,7 +380,7 @@ def build_html(stats, cand, redeem_watch, empty):
             f"<td class='num'>{r['double_low']:.1f}</td>"
             f"<td class='num'>{r['premium']:.1f}%</td>"
             f"<td>{r['RATING']}</td>"
-            f"<td>{r['规模_亿']:.1f}</td>"
+            f"<td class='num'>{r['规模_亿']:.1f}</td>"
             f"<td><span class='{over_cls}'>{over}</span></td></tr>")
 
     red_rows = ""
@@ -409,6 +415,8 @@ body{{font-family:-apple-system,BlinkMacSystemFont,"SF Pro","PingFang SC","Micro
 background:var(--bg);color:var(--fg);padding:16px;max-width:720px;margin:0 auto;-webkit-font-smoothing:antialiased}}
 header{{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}}
 h1{{font-size:20px;font-weight:700}}
+h2{{font-size:15px;margin-bottom:10px;font-weight:700}}
+h3{{font-size:13px;font-weight:700;margin:14px 0 6px;color:var(--fg)}}
 .date{{color:var(--dim);font-size:13px}}
 .badge{{padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600}}
 .badge.ok{{background:rgba(52,199,89,.15);color:var(--ok)}}
@@ -420,34 +428,77 @@ font-size:15px;font-weight:600;border:1px solid var(--line)}}
 .card .k{{font-size:12px;color:var(--dim);margin-bottom:6px}}
 .card .v{{font-size:19px;font-weight:700}}
 .section{{background:var(--card);border-radius:14px;padding:14px 16px;margin-bottom:16px;border:1px solid var(--line)}}
-.section h2{{font-size:15px;margin-bottom:10px;font-weight:700}}
+.guide{{font-size:13px;line-height:1.7;color:var(--fg)}}
+.guide ul{{margin:8px 0 0 18px;color:var(--dim)}}
+.guide li{{margin-bottom:5px}}
+.guide strong{{color:var(--fg)}}
+.action{{border-radius:12px;padding:12px 14px;margin-top:10px;font-size:13px;line-height:1.6}}
+.action.ok{{background:rgba(52,199,89,.08)}}
+.action.risk{{background:rgba(255,59,48,.08)}}
+.action strong{{color:var(--fg)}}
+.metric{{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line);font-size:13px}}
+.metric .mk{{color:var(--dim)}}
+.metric .mv{{color:var(--fg);font-weight:600}}
 table{{width:100%;border-collapse:collapse;font-size:13px}}
-th,td{{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line)}}
+th,td{{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}}
 th{{color:var(--dim);font-weight:600;font-size:12px}}
+.th-num{{text-align:right}}
 td.num{{text-align:right;font-variant-numeric:tabular-nums}}
 .tag-warn{{color:var(--warn);font-weight:600}}
 .tag-dim{{color:var(--dim)}}
 .spark{{margin-top:8px}}
 .spark .lab{{font-size:11px;color:var(--dim);margin:8px 0 2px}}
 .note{{font-size:12px;color:var(--dim);margin:8px 0 12px;line-height:1.5}}
+.sub{{font-size:12px;color:var(--dim);margin:-6px 0 10px;line-height:1.5}}
 footer{{color:var(--dim);font-size:11px;text-align:center;margin-top:20px;line-height:1.6}}
 </style></head><body>
 <header><h1>可转债双低筛选</h1><span class="date">{TODAY}</span></header>
 <div class="badge {badge}">{badge_text}</div>
 <div class="verdict" style="margin-top:12px">{stats['估值水位结论']}</div>
 <div class="grid">{stats_cards}</div>
+
+<div class="section"><h2>今日结论与操作建议</h2>
+<p class="note">本页基于「双低 + 安全债底 + 估值水位」的量化模型自动生成，每日北京 22:00 更新。</p>
+<div class="action {action_cls}">{action_text}</div>
+</div>
+
+<div class="section"><h2>筛选规则与指标说明</h2>
+<div class="guide">
+<h3>一、两个核心区域</h3>
+<ul>
+<li><strong>安全双低候选</strong>：评级 ≥ AA-、发行规模 2~30 亿、价格 ≤ 130 元，再按双低值由小到大排序。这是本策略的潜在买入观察池。</li>
+<li><strong>强赎关注区</strong>：价格 ≥ 130 元的高价债集合。它们股性强、波动大、触发强赎概率高，<strong>不是买入清单</strong>，仅作风险警示。</li>
+</ul>
+<h3>二、常用指标</h3>
+<div class="metric"><span class="mk">价格</span><span class="mv">可转债的市场价格</span></div>
+<div class="metric"><span class="mk">溢价率</span><span class="mv">转股溢价率 = (债价/转股价值 - 1) × 100%，越低股性越强</span></div>
+<div class="metric"><span class="mk">双低值</span><span class="mv">价格 + 溢价率 × 100，越小越符合「债底安全 + 股性不差」</span></div>
+<div class="metric"><span class="mk">评级</span><span class="mv">发债主体信用评级，AAA 最安全，A 及以下风险上升</span></div>
+<div class="metric"><span class="mk">规模(亿)</span><span class="mv">实际发行规模；过小易被炒作，过大弹性弱</span></div>
+<div class="metric"><span class="mk">债底 / 偏贵</span><span class="mv">债底=剩余本息锚；价格超过「买入上限（债底×1.05）」标为偏贵</span></div>
+<h3>三、空仓信号</h3>
+<ul>
+<li>当「双低值 &lt; 130」的安全候选少于 {EMPTY_SIGNAL_N} 只时，触发<strong>空仓观望</strong>。</li>
+<li>含义：市场整体的债价和溢价率都很高，双低策略暂时失效，不硬买。</li>
+</ul>
+</div></div>
+
 <div class="section"><h2>估值水位趋势</h2>
 <div class="spark"><div class="lab">价格中位数</div>{hist_svg_pm}</div>
 <div class="spark"><div class="lab">双低&lt;130 标的数量</div>{hist_svg_dl}</div>
-<div class="spark"><div class="lab" style="margin-top:10px">判定：双低&lt;130 合格标的 &lt; {EMPTY_SIGNAL_N} 只 → 触发空仓信号</div></div>
+<p class="note">说明：横轴为历史运行日期。价格中位数反映市场整体贵贱；双低&lt;130 标的数量反映可选机会多少。数量越多，市场越便宜。</p>
 </div>
+
 <div class="section"><h2>安全双低候选（AA-及以上 · 规模2~30亿 · 价≤130）Top 20</h2>
-<table><thead><tr><th>代码</th><th>名称</th><th>价格</th><th>双低值</th><th>溢价率</th><th>评级</th><th>规模(亿)</th><th>债底</th></tr></thead>
+<p class="sub">入选条件：评级 ≥ AA-、规模 2~30 亿、价格 ≤ 130 元，按双低值由低到高排。「债底」为偏贵表示当前价已高于剩余本息锚的 105%，安全边际不足。</p>
+<table><thead><tr><th>代码</th><th>名称</th><th class="th-num">价格</th><th class="th-num">双低值</th><th class="th-num">溢价率</th><th>评级</th><th class="th-num">规模(亿)</th><th>债底</th></tr></thead>
 <tbody>{cand_rows}</tbody></table></div>
+
 <div class="section"><h2>强赎关注区（价≥130）Top 10</h2>
 <p class="note">⚠️ 这里是「高价高溢价的妖债/强赎博弈区」：价格远超 130、股性极强，正股回调时跌幅可能很大；<strong>非买入清单</strong>，仅作风险警示与观察。</p>
-<table><thead><tr><th>代码</th><th>名称</th><th>价格</th><th>溢价率</th><th>双低值</th><th>评级</th></tr></thead>
+<table><thead><tr><th>代码</th><th>名称</th><th class="th-num">价格</th><th class="th-num">溢价率</th><th class="th-num">双低值</th><th>评级</th></tr></thead>
 <tbody>{red_rows}</tbody></table></div>
+
 <footer>数据来源：东方财富 · 仅为量化筛选，不构成投资建议<br>
 策略：双低+安全债底+评级/规模过滤+估值水位总开关 · 自用研究</footer>
 </body></html>"""
