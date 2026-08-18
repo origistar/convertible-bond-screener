@@ -25,7 +25,10 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(BASE, "output")
 HISTORY = os.path.join(BASE, "history.csv")
 INDEX = os.path.join(BASE, "index.html")
+ARCHIVE = os.path.join(BASE, "archive")
+HISTORY_PAGE = os.path.join(BASE, "history.html")
 os.makedirs(OUT, exist_ok=True)
+os.makedirs(ARCHIVE, exist_ok=True)
 
 TODAY = dt.datetime.now().strftime("%Y%m%d")
 NOW = pd.Timestamp.now()
@@ -351,7 +354,8 @@ def sparkline(values, w=300, h=60, color="#0a84ff"):
             f'stroke-width="2" points="{" ".join(pts)}"/></svg>')
 
 
-def build_html(stats, cand, redeem_watch, empty):
+def render_html(stats, cand, redeem_watch, empty, archived=False):
+    pre = "../" if archived else ""
     # 读历史做趋势
     hist_svg_pm, hist_svg_dl = "", ""
     if os.path.exists(HISTORY):
@@ -368,6 +372,12 @@ def build_html(stats, cand, redeem_watch, empty):
         if empty else
         "市场处于可操作区间，可结合仓位从「安全双低候选」中挑选标的，但仍需单只独立判断风险。"
     )
+
+    if archived:
+        note_html = f"历史存档快照 · {TODAY} · <a href='{pre}index.html'>← 返回最新页</a>"
+    else:
+        note_html = (f"本页基于「双低 + 安全债底 + 估值水位」的量化模型自动生成，"
+                     f"每日北京 22:00 更新。 <a href='{pre}history.html'>查看历史存档 →</a>")
 
     cand_rows = ""
     show = cand.head(20)
@@ -458,7 +468,7 @@ footer{{color:var(--dim);font-size:11px;text-align:center;margin-top:20px;line-h
 <div class="grid">{stats_cards}</div>
 
 <div class="section"><h2>今日结论与操作建议</h2>
-<p class="note">本页基于「双低 + 安全债底 + 估值水位」的量化模型自动生成，每日北京 22:00 更新。</p>
+<p class="note">{note_html}</p>
 <div class="action {action_cls}">{action_text}</div>
 </div>
 
@@ -502,9 +512,91 @@ footer{{color:var(--dim);font-size:11px;text-align:center;margin-top:20px;line-h
 <footer>数据来源：东方财富 · 仅为量化筛选，不构成投资建议<br>
 策略：双低+安全债底+评级/规模过滤+估值水位总开关 · 自用研究</footer>
 </body></html>"""
-    with open(INDEX, "w", encoding="utf-8") as f:
+    out_path = os.path.join(ARCHIVE, f"{TODAY}.html") if archived else INDEX
+    with open(out_path, "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"[done] index.html: {INDEX}")
+    print(f"[done] {'archive' if archived else 'index'}.html: {out_path}")
+
+
+def build_html(stats, cand, redeem_watch, empty):
+    """生成最新页（index.html）与当日起存快照（archive/{TODAY}.html）"""
+    render_html(stats, cand, redeem_watch, empty, archived=False)
+    render_html(stats, cand, redeem_watch, empty, archived=True)
+
+
+def build_history_html():
+    """生成历史存档页 history.html：长期趋势图 + 每日清单表（链接到 archive/）"""
+    if not os.path.exists(HISTORY):
+        print("[skip] history.csv 不存在，跳过历史页生成")
+        return
+    h = pd.read_csv(HISTORY).sort_values("date").reset_index(drop=True)
+    n = len(h)
+    pm_chart = sparkline(h["price_median"].tolist(), w=620, h=160, color="#ff9f0a") if n >= 2 else ""
+    dl_chart = sparkline(h["dl_median"].tolist(), w=620, h=160, color="#34c759") if n >= 2 else ""
+    c130_chart = sparkline(h["dl130_count"].tolist(), w=620, h=160, color="#0a84ff") if n >= 2 else ""
+    note_charts = "" if n >= 2 else "<p class='note'>至少需要 2 天数据才会显示趋势图（次日自动出现）。</p>"
+
+    rows = ""
+    for _, r in h.iterrows():
+        rows += (
+            f"<tr><td>{r['date']}</td>"
+            f"<td class='num'>{r['price_median']}</td>"
+            f"<td class='num'>{r['dl_median']}</td>"
+            f"<td class='num'>{r['dl130_count']}</td>"
+            f"<td class='num'>{r['redeem_watch']}</td>"
+            f"<td>{r['verdict']}</td>"
+            f"<td>{r['empty_signal']}</td>"
+            f"<td><a href='archive/{r['date']}.html'>查看 →</a></td></tr>")
+
+    html = f"""<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>估值水位历史存档</title>
+<style>
+:root{{--bg:#f2f2f7;--card:#fff;--fg:#1c1c1e;--dim:#8e8e93;--line:#e5e5ea;
+--ok:#34c759;--warn:#ff9f0a;--risk:#ff3b30;--blue:#0a84ff;}}
+@media(prefers-color-scheme:dark){{:root{{--bg:#000;--card:#1c1c1e;--fg:#f2f2f7;--dim:#8e8e93;--line:#2c2c2e;}}}}
+*{{box-sizing:border-box;margin:0;padding:0}}
+body{{font-family:-apple-system,BlinkMacSystemFont,"SF Pro","PingFang SC","Microsoft YaHei",sans-serif;
+background:var(--bg);color:var(--fg);padding:16px;max-width:720px;margin:0 auto;-webkit-font-smoothing:antialiased}}
+h1{{font-size:20px;font-weight:700;margin-bottom:6px}}
+.date{{color:var(--dim);font-size:13px}}
+a{{color:var(--blue);text-decoration:none}}
+.section{{background:var(--card);border-radius:14px;padding:14px 16px;margin:14px 0;border:1px solid var(--line)}}
+.section h2{{font-size:15px;margin-bottom:10px;font-weight:700}}
+.spark{{margin-top:6px}}
+.spark .lab{{font-size:12px;color:var(--dim);margin:10px 0 2px}}
+.note{{font-size:12px;color:var(--dim);margin:8px 0;line-height:1.5}}
+table{{width:100%;border-collapse:collapse;font-size:13px}}
+th,td{{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line)}}
+th{{color:var(--dim);font-weight:600;font-size:12px}}
+.th-num{{text-align:right}}
+td.num{{text-align:right;font-variant-numeric:tabular-nums}}
+footer{{color:var(--dim);font-size:11px;text-align:center;margin-top:20px;line-height:1.6}}
+</style></head><body>
+<header><h1>估值水位历史存档</h1>
+<span class="date">共 {n} 天 · 数据来源：东方财富</span></header>
+<p class="note"><a href="index.html">← 返回最新页</a></p>
+
+<div class="section"><h2>价格中位数趋势</h2>
+<div class="spark"><div class="lab">价格中位数（越高越贵）</div>{pm_chart}</div>
+{note_charts}</div>
+
+<div class="section"><h2>双低值中位数趋势</h2>
+<div class="spark"><div class="lab">双低值中位数（越高越贵）</div>{dl_chart}</div></div>
+
+<div class="section"><h2>双低&lt;130 标的数量趋势</h2>
+<div class="spark"><div class="lab">可选机会数量（越多越便宜）</div>{c130_chart}</div></div>
+
+<div class="section"><h2>每日清单</h2>
+<table><thead><tr><th>日期</th><th class="th-num">价格中位</th><th class="th-num">双低中位</th><th class="th-num">双低&lt;130数</th><th class="th-num">强赎区</th><th>估值结论</th><th>空仓</th><th>详情</th></tr></thead>
+<tbody>{rows}</tbody></table></div>
+
+<footer>仅为量化筛选，不构成投资建议</footer>
+</body></html>"""
+    with open(HISTORY_PAGE, "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"[done] history.html: {HISTORY_PAGE}")
 
 
 def send_serverchan(key, stats, empty):
@@ -534,6 +626,7 @@ def main():
         os.path.join(OUT, f"候选清单_{TODAY}.csv"), index=False, encoding="utf-8-sig")
     append_history(stats, empty)
     build_html(stats, cand, redeem_watch, empty)
+    build_history_html()
 
     print("\n=== 市场统计 / 估值水位 ===")
     for k, v in stats.items():

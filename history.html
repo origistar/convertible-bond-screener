@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>估值水位历史存档</title>
+<style>
+:root{--bg:#f2f2f7;--card:#fff;--fg:#1c1c1e;--dim:#8e8e93;--line:#e5e5ea;
+--ok:#34c759;--warn:#ff9f0a;--risk:#ff3b30;--blue:#0a84ff;}
+@media(prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--fg:#f2f2f7;--dim:#8e8e93;--line:#2c2c2e;}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro","PingFang SC","Microsoft YaHei",sans-serif;
+background:var(--bg);color:var(--fg);padding:16px;max-width:720px;margin:0 auto;-webkit-font-smoothing:antialiased}
+h1{font-size:20px;font-weight:700;margin-bottom:6px}
+.date{color:var(--dim);font-size:13px}
+a{color:var(--blue);text-decoration:none}
+.section{background:var(--card);border-radius:14px;padding:14px 16px;margin:14px 0;border:1px solid var(--line)}
+.section h2{font-size:15px;margin-bottom:10px;font-weight:700}
+.spark{margin-top:6px}
+.spark .lab{font-size:12px;color:var(--dim);margin:10px 0 2px}
+.note{font-size:12px;color:var(--dim);margin:8px 0;line-height:1.5}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:var(--dim);font-weight:600;font-size:12px}
+.th-num{text-align:right}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+footer{color:var(--dim);font-size:11px;text-align:center;margin-top:20px;line-height:1.6}
+</style></head><body>
+<header><h1>估值水位历史存档</h1>
+<span class="date">共 1 天 · 数据来源：东方财富</span></header>
+<p class="note"><a href="index.html">← 返回最新页</a></p>
+
+<div class="section"><h2>价格中位数趋势</h2>
+<div class="spark"><div class="lab">价格中位数（越高越贵）</div></div>
+<p class='note'>至少需要 2 天数据才会显示趋势图（次日自动出现）。</p></div>
+
+<div class="section"><h2>双低值中位数趋势</h2>
+<div class="spark"><div class="lab">双低值中位数（越高越贵）</div></div></div>
+
+<div class="section"><h2>双低&lt;130 标的数量趋势</h2>
+<div class="spark"><div class="lab">可选机会数量（越多越便宜）</div></div></div>
+
+<div class="section"><h2>每日清单</h2>
+<table><thead><tr><th>日期</th><th class="th-num">价格中位</th><th class="th-num">双低中位</th><th class="th-num">双低&lt;130数</th><th class="th-num">强赎区</th><th>估值结论</th><th>空仓</th><th>详情</th></tr></thead>
+<tbody><tr><td>20260818</td><td class='num'>136.88</td><td class='num'>206.49</td><td class='num'>4</td><td class='num'>180</td><td>估值高位 —— 双低已失效，空仓观望</td><td>触发</td><td><a href='archive/20260818.html'>查看 →</a></td></tr></tbody></table></div>
+
+<footer>仅为量化筛选，不构成投资建议</footer>
+</body></html>
