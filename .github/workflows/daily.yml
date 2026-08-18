@@ -1,0 +1,45 @@
+name: 可转债双低每日筛选
+
+on:
+  schedule:
+    # 北京时间 22:00（UTC 14:00）收盘后自动跑；+8 小时时差
+    - cron: "0 14 * * *"
+  workflow_dispatch:      # 允许手动触发
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Run screener
+        env:
+          SERVERCHAN_KEY: ${{ secrets.SERVERCHAN_KEY }}
+        run: python screener.py
+
+      - name: Commit & push results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add output/ index.html history.csv
+          if git diff --staged --quiet; then
+            echo "no changes"
+          else
+            git commit -m "chore: 每日筛选更新 $(date +%Y-%m-%d)"
+            git push
+          fi

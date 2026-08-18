@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.DS_Store
+# 仅保留最新的缓存快照，避免堆积
+output/quote_cache_*.json
+output/info_cache_*.json
