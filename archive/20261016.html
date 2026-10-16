@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>可转债双低筛选 · 20261016</title>
+<style>
+:root{--bg:#f2f2f7;--card:#fff;--fg:#1c1c1e;--dim:#8e8e93;--line:#e5e5ea;
+--ok:#34c759;--warn:#ff9f0a;--risk:#ff3b30;--blue:#0a84ff;}
+@media(prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--fg:#f2f2f7;--dim:#8e8e93;--line:#2c2c2e;}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro","PingFang SC","Microsoft YaHei",sans-serif;
+background:var(--bg);color:var(--fg);padding:16px;max-width:720px;margin:0 auto;-webkit-font-smoothing:antialiased}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+h1{font-size:20px;font-weight:700}
+h2{font-size:15px;margin-bottom:10px;font-weight:700}
+h3{font-size:13px;font-weight:700;margin:14px 0 6px;color:var(--fg)}
+.date{color:var(--dim);font-size:13px}
+.badge{padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600}
+.badge.ok{background:rgba(52,199,89,.15);color:var(--ok)}
+.badge.risk{background:rgba(255,59,48,.15);color:var(--risk)}
+.verdict{background:var(--card);border-radius:14px;padding:14px 16px;margin-bottom:14px;
+font-size:15px;font-weight:600;border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.card{background:var(--card);border-radius:14px;padding:12px;text-align:center;border:1px solid var(--line)}
+.card .k{font-size:12px;color:var(--dim);margin-bottom:6px}
+.card .v{font-size:19px;font-weight:700}
+.section{background:var(--card);border-radius:14px;padding:14px 16px;margin-bottom:16px;border:1px solid var(--line)}
+.guide{font-size:13px;line-height:1.7;color:var(--fg)}
+.guide ul{margin:8px 0 0 18px;color:var(--dim)}
+.guide li{margin-bottom:5px}
+.guide strong{color:var(--fg)}
+.action{border-radius:12px;padding:12px 14px;margin-top:10px;font-size:13px;line-height:1.6}
+.action.ok{background:rgba(52,199,89,.08)}
+.action.risk{background:rgba(255,59,48,.08)}
+.action strong{color:var(--fg)}
+.metric{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.metric .mk{color:var(--dim)}
+.metric .mv{color:var(--fg);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 6px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--dim);font-weight:600;font-size:12px}
+.th-num{text-align:right}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.tag-warn{color:var(--warn);font-weight:600}
+.tag-dim{color:var(--dim)}
+.spark{margin-top:8px}
+.spark .lab{font-size:11px;color:var(--dim);margin:8px 0 2px}
+.note{font-size:12px;color:var(--dim);margin:8px 0 12px;line-height:1.5}
+.sub{font-size:12px;color:var(--dim);margin:-6px 0 10px;line-height:1.5}
+footer{color:var(--dim);font-size:11px;text-align:center;margin-top:20px;line-height:1.6}
+</style></head><body>
+<header><h1>可转债双低筛选</h1><span class="date">20261016</span></header>
+<div class="badge risk">⚠️ 空仓观望</div>
+<div class="verdict" style="margin-top:12px">估值偏高 —— 谨慎、控仓位</div>
+<div class="grid"><div class='card'><div class='k'>可交易转债</div><div class='v'>191</div></div><div class='card'><div class='k'>价格中位数</div><div class='v'>130.29</div></div><div class='card'><div class='k'>双低值中位数</div><div class='v'>200.13</div></div><div class='card'><div class='k'>双低<130数量</div><div class='v'>2</div></div><div class='card'><div class='k'>强赎关注区</div><div class='v'>98</div></div><div class='card'><div class='k'>空仓信号</div><div class='v'>触发</div></div></div>
+
+<div class="section"><h2>今日结论与操作建议</h2>
+<p class="note">历史存档快照 · 20261016 · <a href='../index.html'>← 返回最新页</a></p>
+<div class="action risk">当前双低&lt;130 的合格标的不足 15 只，说明市场整体偏贵。<strong>操作建议：空仓观望，不新建仓</strong>，等该数量回到 15 只以上再出手。</div>
+</div>
+
+<div class="section"><h2>筛选规则与指标说明</h2>
+<div class="guide">
+<h3>一、两个核心区域</h3>
+<ul>
+<li><strong>安全双低候选</strong>：评级 ≥ AA-、发行规模 2~30 亿、价格 ≤ 130 元，再按双低值由小到大排序。这是本策略的潜在买入观察池。</li>
+<li><strong>强赎关注区</strong>：价格 ≥ 130 元的高价债集合。它们股性强、波动大、触发强赎概率高，<strong>不是买入清单</strong>，仅作风险警示。</li>
+</ul>
+<h3>二、常用指标</h3>
+<div class="metric"><span class="mk">价格</span><span class="mv">可转债的市场价格</span></div>
+<div class="metric"><span class="mk">溢价率</span><span class="mv">转股溢价率 = (债价/转股价值 - 1) × 100%，越低股性越强</span></div>
+<div class="metric"><span class="mk">双低值</span><span class="mv">价格 + 溢价率 × 100，越小越符合「债底安全 + 股性不差」</span></div>
+<div class="metric"><span class="mk">评级</span><span class="mv">发债主体信用评级，AAA 最安全，A 及以下风险上升</span></div>
+<div class="metric"><span class="mk">规模(亿)</span><span class="mv">实际发行规模；过小易被炒作，过大弹性弱</span></div>
+<div class="metric"><span class="mk">债底 / 偏贵</span><span class="mv">债底=剩余本息锚；价格超过「买入上限（债底×1.05）」标为偏贵</span></div>
+<h3>三、空仓信号</h3>
+<ul>
+<li>当「双低值 &lt; 130」的安全候选少于 15 只时，触发<strong>空仓观望</strong>。</li>
+<li>含义：市场整体的债价和溢价率都很高，双低策略暂时失效，不硬买。</li>
+</ul>
+</div></div>
+
+<div class="section"><h2>估值水位趋势</h2>
+<div class="spark"><div class="lab">价格中位数</div><svg viewBox="0 0 300 60" width="100%" height="60" preserveAspectRatio="none"><polyline fill="none" stroke="#ff9f0a" stroke-width="2" points="8.0,26.8 13.8,29.4 19.6,29.5 25.4,29.2 31.2,29.2 37.0,29.2 42.8,30.5 48.6,27.2 54.4,26.3 60.2,24.3 66.0,24.3 71.8,24.3 77.6,26.4 83.3,26.5 89.1,28.2 94.9,20.4 100.7,30.7 106.5,30.7 112.3,30.7 118.1,31.1 123.9,30.1 129.7,31.5 135.5,34.4 141.3,35.1 147.1,35.1 152.9,35.1 158.7,33.6 164.5,35.3 170.3,34.2 176.1,34.9 181.9,32.8 187.7,32.8 193.5,32.8 199.3,32.4 205.1,32.9 210.9,24.5 216.7,38.7 222.4,38.7 228.2,39.0 234.0,8.0 239.8,38.2 245.6,38.2 251.4,27.6 257.2,38.2 263.0,28.6 268.8,43.8 274.6,42.3 280.4,46.5 286.2,52.0 292.0,41.1"/></svg></div>
+<div class="spark"><div class="lab">双低&lt;130 标的数量</div><svg viewBox="0 0 300 60" width="100%" height="60" preserveAspectRatio="none"><polyline fill="none" stroke="#0a84ff" stroke-width="2" points="8.0,26.9 13.8,26.9 19.6,26.9 25.4,26.9 31.2,26.9 37.0,26.9 42.8,26.9 48.6,26.9 54.4,26.9 60.2,26.9 66.0,26.9 71.8,26.9 77.6,26.9 83.3,26.9 89.1,26.9 94.9,39.4 100.7,26.9 106.5,26.9 112.3,26.9 118.1,26.9 123.9,26.9 129.7,26.9 135.5,26.9 141.3,26.9 147.1,26.9 152.9,26.9 158.7,26.9 164.5,26.9 170.3,26.9 176.1,26.9 181.9,26.9 187.7,26.9 193.5,26.9 199.3,33.1 205.1,26.9 210.9,39.4 216.7,14.3 222.4,14.3 228.2,20.6 234.0,52.0 239.8,20.6 245.6,20.6 251.4,45.7 257.2,20.6 263.0,45.7 268.8,20.6 274.6,14.3 280.4,14.3 286.2,8.0 292.0,39.4"/></svg></div>
+<p class="note">说明：横轴为历史运行日期。价格中位数反映市场整体贵贱；双低&lt;130 标的数量反映可选机会多少。数量越多，市场越便宜。</p>
+</div>
+
+<div class="section"><h2>安全双低候选（AA-及以上 · 规模2~30亿 · 价≤130）Top 20</h2>
+<p class="sub">入选条件：评级 ≥ AA-、规模 2~30 亿、价格 ≤ 130 元，按双低值由低到高排。「债底」为偏贵表示当前价已高于剩余本息锚的 105%，安全边际不足。</p>
+<table><thead><tr><th>代码</th><th>名称</th><th class="th-num">价格</th><th class="th-num">双低值</th><th class="th-num">溢价率</th><th>评级</th><th class="th-num">规模(亿)</th><th>债底</th></tr></thead>
+<tbody><tr><td>111017</td><td>蓝天转债</td><td class='num'>124.39</td><td class='num'>149.9</td><td class='num'>25.5%</td><td>AA</td><td class='num'>8.7</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>127103</td><td>东南转债</td><td class='num'>125.20</td><td class='num'>150.2</td><td class='num'>25.0%</td><td>AA</td><td class='num'>20.0</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>123183</td><td>海顺转债</td><td class='num'>126.04</td><td class='num'>155.7</td><td class='num'>29.6%</td><td>AA-</td><td class='num'>6.3</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>127082</td><td>亚科转债</td><td class='num'>125.27</td><td class='num'>157.4</td><td class='num'>32.2%</td><td>AA</td><td class='num'>11.6</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>123172</td><td>漱玉转债</td><td class='num'>125.64</td><td class='num'>160.0</td><td class='num'>34.4%</td><td>AA-</td><td class='num'>8.0</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>113070</td><td>渝水转债</td><td class='num'>121.69</td><td class='num'>161.1</td><td class='num'>39.4%</td><td>AAA</td><td class='num'>19.0</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>113067</td><td>燃23转债</td><td class='num'>122.10</td><td class='num'>161.3</td><td class='num'>39.2%</td><td>AAA</td><td class='num'>30.0</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>123178</td><td>花园转债</td><td class='num'>129.85</td><td class='num'>161.5</td><td class='num'>31.6%</td><td>AA-</td><td class='num'>12.0</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>123225</td><td>翔丰转债</td><td class='num'>130.00</td><td class='num'>166.5</td><td class='num'>36.5%</td><td>AA-</td><td class='num'>8.0</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>110093</td><td>神马转债</td><td class='num'>115.46</td><td class='num'>167.4</td><td class='num'>51.9%</td><td>AAA</td><td class='num'>30.0</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>127099</td><td>盛航转债</td><td class='num'>126.99</td><td class='num'>168.1</td><td class='num'>41.1%</td><td>AA-</td><td class='num'>7.4</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>127105</td><td>龙星转债</td><td class='num'>124.48</td><td class='num'>168.9</td><td class='num'>44.4%</td><td>AA-</td><td class='num'>7.5</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>110100</td><td>龙建转债</td><td class='num'>118.69</td><td class='num'>170.4</td><td class='num'>51.8%</td><td>AA</td><td class='num'>10.0</td><td><span class='tag-dim'>—</span></td></tr><tr><td>123277</td><td>玉禾转债</td><td class='num'>129.99</td><td class='num'>174.1</td><td class='num'>44.1%</td><td>AA</td><td class='num'>15.0</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>123165</td><td>回天转债</td><td class='num'>124.10</td><td class='num'>174.4</td><td class='num'>50.3%</td><td>AA-</td><td class='num'>8.5</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>113682</td><td>益丰转债</td><td class='num'>122.81</td><td class='num'>175.3</td><td class='num'>52.5%</td><td>AA</td><td class='num'>18.0</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>127111</td><td>金威转债</td><td class='num'>129.01</td><td class='num'>177.2</td><td class='num'>48.2%</td><td>AA</td><td class='num'>12.9</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>127102</td><td>浙建转债</td><td class='num'>117.30</td><td class='num'>177.6</td><td class='num'>60.3%</td><td>AA+</td><td class='num'>10.0</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>113688</td><td>国检转债</td><td class='num'>125.21</td><td class='num'>178.4</td><td class='num'>53.2%</td><td>AA+</td><td class='num'>8.0</td><td><span class='tag-warn'>偏贵</span></td></tr><tr><td>123193</td><td>海能转债</td><td class='num'>124.64</td><td class='num'>180.0</td><td class='num'>55.4%</td><td>AA-</td><td class='num'>6.0</td><td><span class='tag-warn'>偏贵</span></td></tr></tbody></table></div>
+
+<div class="section"><h2>强赎关注区（价≥130）Top 10</h2>
+<p class="note">⚠️ 这里是「高价高溢价的妖债/强赎博弈区」：价格远超 130、股性极强，正股回调时跌幅可能很大；<strong>非买入清单</strong>，仅作风险警示与观察。</p>
+<table><thead><tr><th>代码</th><th>名称</th><th class="th-num">价格</th><th class="th-num">溢价率</th><th class="th-num">双低值</th><th>评级</th></tr></thead>
+<tbody><tr><td>123241</td><td>欧通转债</td><td class='num'>576.00</td><td class='num'>36.1%</td><td class='num'>612.1</td><td>AA-</td></tr><tr><td>118030</td><td>睿创转债</td><td class='num'>540.23</td><td class='num'>25.1%</td><td class='num'>565.3</td><td>AA</td></tr><tr><td>118058</td><td>微导转债</td><td class='num'>312.11</td><td class='num'>32.3%</td><td class='num'>344.4</td><td>AAsti</td></tr><tr><td>111012</td><td>福新转债</td><td class='num'>311.67</td><td class='num'>35.2%</td><td class='num'>346.9</td><td>A+</td></tr><tr><td>123176</td><td>精测转2</td><td class='num'>310.20</td><td class='num'>31.8%</td><td class='num'>342.0</td><td>AA-sti</td></tr><tr><td>123245</td><td>集智转债</td><td class='num'>298.99</td><td class='num'>21.8%</td><td class='num'>320.8</td><td>A</td></tr><tr><td>127096</td><td>泰坦转债</td><td class='num'>286.27</td><td class='num'>8.6%</td><td class='num'>294.9</td><td>A</td></tr><tr><td>123273</td><td>三江转债</td><td class='num'>268.60</td><td class='num'>213.8%</td><td class='num'>482.4</td><td>A+</td></tr><tr><td>118064</td><td>联瑞转债</td><td class='num'>268.01</td><td class='num'>26.6%</td><td class='num'>294.6</td><td>AAsti</td></tr><tr><td>123255</td><td>鼎龙转债</td><td class='num'>266.00</td><td class='num'>31.3%</td><td class='num'>297.3</td><td>AA</td></tr></tbody></table></div>
+
+<footer>数据来源：东方财富 · 仅为量化筛选，不构成投资建议<br>
+策略：双低+安全债底+评级/规模过滤+估值水位总开关 · 自用研究</footer>
+</body></html>
